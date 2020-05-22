@@ -14,7 +14,7 @@ import { marketSchema } from './markets/schemas/market.schema'
 
 
 const configuration = () => ({
-  port: parseInt(process.env.PORT, 10) || 9000,
+  port: parseInt(process.env.PORT, 10) || 8000,
   database: {
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
