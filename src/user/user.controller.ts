@@ -37,7 +37,7 @@ export class UserController {
         @Req() req,
         @Res() res,
     ) {
-
+console.log('user: ', apiUserDto)
         return await this.UserService.signIn(apiUserDto, res);
     }
 

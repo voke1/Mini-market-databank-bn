@@ -12,12 +12,10 @@ export class UserService {
         @InjectModel('User') private clientModel: Model<User>,
         private responseService: ResponseService,
     ) { }
-    async findOneByEmail(email): Promise<User> {
-        return await this.clientModel.findOne({ email });
-    }
-    async signUp(user, res) {
+
+    async signUp(user, res): Promise<User> {
         try {
-            const foundUser = await this.findOneByEmail(user.email);
+            const foundUser = await this.clientModel.findOne({email: user.email});
             if (foundUser) {
                 return this.responseService.clientError(
                     res,
@@ -27,7 +25,7 @@ export class UserService {
             user.password = await bcrypt.hash(user.password, 6);
             const userCreated = await new this.clientModel(user)
             if (userCreated) {
-
+                userCreated.save()
                 return this.responseService.requestSuccessful(res, user);
             }
 
@@ -37,9 +35,9 @@ export class UserService {
 
     }
 
-    async signIn(user, res) {
+    async signIn(user, res): Promise<User> {
         try {
-            const foundUser = await this.findOneByEmail(user.email);
+            const foundUser = await this.clientModel.findOne({email: user.email});
             if (foundUser) {
                 const token = await TokenService.getToken({
                     firstName: user.firstName,
@@ -49,6 +47,12 @@ export class UserService {
                 user.token = token;
              
                 return this.responseService.requestSuccessful(res, user);
+            }else{
+                return this.responseService.clientError(
+                    res,
+                    'User not found',
+                );
+
             }
 
         } catch (error) {
