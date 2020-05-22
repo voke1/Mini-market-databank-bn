@@ -29,6 +29,8 @@ export class UserController {
 
         return await this.UserService.signUp(apiUserDto, res);
     }
+
+    
     @Post('auth/user/signin')
     async Signin(
         @Body() apiUserDto,
@@ -36,7 +38,7 @@ export class UserController {
         @Res() res,
     ) {
 
-        return await this.UserService.signUp(apiUserDto, res);
+        return await this.UserService.signIn(apiUserDto, res);
     }
 
 
