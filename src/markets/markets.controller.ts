@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import {MarketsService } from './markets.service';
 import { Market } from './interfaces/market.interface';
+import { AuthGuard } from '../middleware/auth.middleware';
 
 
 @Controller('markets')
@@ -23,7 +24,8 @@ export class MarketsController {
 
 
     @Post()
-    createPayment(
+    @UseGuards(new AuthGuard())
+    createMarket(
         @Body() Market: Market,
 
     ): Promise<Market> {
@@ -32,12 +34,13 @@ export class MarketsController {
 
 
     @Get()
-    findPayments(@Query('marketId') botId): Promise<Market[]> {
+    findMarket(@Query('marketId') botId): Promise<Market[]> {
         return this.marketService.getMarket(botId);
     }
 
 
     @Delete(':id')
+    @UseGuards(new AuthGuard())
     delete(@Param('id') id): Promise<Market> {
         return this.marketService.delete(id);
     }
