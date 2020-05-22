@@ -24,15 +24,30 @@ export class UserService {
                     'User already exist',
                 );
             }
-            const token = await TokenService.getToken({
-                fullName: user.fullName,
-                email: user.email,
-            }, '30d');
             user.password = await bcrypt.hash(user.password, 6);
-            user.token = token;
-            const apiUserCreated = await new this.clientModel(user)
-            if (apiUserCreated) {
+            const userCreated = await new this.clientModel(user)
+            if (userCreated) {
 
+                return this.responseService.requestSuccessful(res, user);
+            }
+
+        } catch (error) {
+            return this.responseService.serverError(res, error.message);
+        }
+
+    }
+
+    async signIn(user, res) {
+        try {
+            const foundUser = await this.findOneByEmail(user.email);
+            if (foundUser) {
+                const token = await TokenService.getToken({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                }, '30d');
+                user.token = token;
+             
                 return this.responseService.requestSuccessful(res, user);
             }
 
