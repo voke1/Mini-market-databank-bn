@@ -17,13 +17,13 @@ import { Market } from './interfaces/market.interface';
 import { AuthGuard } from '../middleware/auth.middleware';
 
 
-@Controller('markets')
+@Controller('api/v1')
 export class MarketsController {
 
     constructor(private marketService: MarketsService) { }
 
 
-    @Post()
+    @Post('market')
     @UseGuards(new AuthGuard())
     createMarket(
         @Body() Market: Market,
@@ -32,16 +32,20 @@ export class MarketsController {
         return this.marketService.createMarket(Market);
     }
 
+    @Get('market/all')
+    findMarkets(): Promise<Market[]> {
+        return this.marketService.getMarkets();
+    }
 
-    @Get()
-    findMarket(@Query('marketId') botId): Promise<Market[]> {
-        return this.marketService.getMarket(botId);
+    @Get('market/:marketId')
+    findMarket(@Param('marketId') marketId): Promise<Market[]> {
+        return this.marketService.getMarket(marketId);
     }
 
 
-    @Delete(':id')
+    @Delete('market/:marketId')
     @UseGuards(new AuthGuard())
-    delete(@Param('id') id): Promise<Market> {
+    delete(@Param('marketId') id): Promise<Market> {
         return this.marketService.delete(id);
     }
 }

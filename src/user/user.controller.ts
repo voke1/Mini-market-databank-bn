@@ -13,6 +13,7 @@ import {
     Query,
 } from '@nestjs/common';
 import {UserService } from './user.service';
+import { User } from './interfaces/user.interface'
 
 @Controller('api/v1')
 export class UserController {
@@ -22,23 +23,22 @@ export class UserController {
 
     @Post('auth/user/signup')
     async Signup(
-        @Body() apiUserDto,
+        @Body() user: User,
         @Req() req,
         @Res() res,
-    ) {
+    ): Promise<User> {
 
-        return await this.UserService.signUp(apiUserDto, res);
+        return await this.UserService.signUp(user, res);
     }
 
     
     @Post('auth/user/signin')
     async Signin(
-        @Body() apiUserDto,
+        @Body() user: User,
         @Req() req,
         @Res() res,
-    ) {
-console.log('user: ', apiUserDto)
-        return await this.UserService.signIn(apiUserDto, res);
+    ): Promise<User> {
+        return await this.UserService.signIn(user, res);
     }
 
 

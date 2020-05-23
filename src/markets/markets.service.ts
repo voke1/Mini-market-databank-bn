@@ -15,6 +15,7 @@ export class MarketsService {
 
         try {
             const Market = await newMarket.save();
+            console.log('Market saved: ', Market)
             if (Market) {
                 return {
                     success: true,
@@ -31,10 +32,11 @@ export class MarketsService {
         }
     }
     async getMarket(marketId): Promise<Market[]> {
-        if (marketId) {
-            return await this.marketModel.find({ id: marketId });
+            return await this.marketModel.findById({ _id: marketId });
+        
+    }
 
-        }
+    async getMarkets(): Promise<[]> {
         return await this.marketModel.find();
     }
 
