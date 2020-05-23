@@ -48,6 +48,12 @@ AgroMall is at the intersection of digitised agricultural production support, di
 $ npm install
 ```
 
+## Deployment
+
+- Agromall API is deployed to Heroku. Use this link https://agromall-market-databank.herokuapp.com/
+- Agromall API documentation can be found at https://documenter.getpostman.com/view/7709635/Szt8dVMC
+
+
 ## Running the app
 
 ```bash
