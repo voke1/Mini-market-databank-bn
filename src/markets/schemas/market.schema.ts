@@ -13,23 +13,19 @@ export const marketSchema = new Schema({
   },
   description: {
     type: String,
-    min: 5,
-    max: 50,
+
   },
-  locations: {
+  geolocation: {
+    type: Object,
+  },
+  category: {
     type: String,
     min: 5,
     max: 100,
   },
-  foodCategory: {
+  imageUrl: {
     type: String,
-    min: 5,
-    max: 100,
-  },
-  image: {
-    type: String,
-    min: 8,
-    max: 20,
+
   },
   date: {
     type: Date,

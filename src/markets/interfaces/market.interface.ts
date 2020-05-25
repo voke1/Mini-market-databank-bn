@@ -3,8 +3,8 @@ export interface Market extends Document {
     id?: string;
     name: string;
     description: string;
-    locations: string;
-    foodCategory: string;
-    image: string;
+    geolocation: object;
+    category: string;
+    imageUrl: string;
     date: Date;
 }
